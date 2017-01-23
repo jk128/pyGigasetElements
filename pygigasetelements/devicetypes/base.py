@@ -10,6 +10,11 @@ class Base(Element):
     def __init__(self, id, **kwargs):
         super(Base, self).__init__(id, **kwargs)
 
+    def _retrieve(self):
+        data = self.get(connection.URL_BASE)
+        values = next((base for base in data if base['id'] == self._id))
+        return values
+
     @property
     def mode(self):
         """
