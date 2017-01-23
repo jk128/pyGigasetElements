@@ -1,7 +1,7 @@
 import json
 
-from pygigasetelements.connection import _URL_BASE
-from ._element import Element
+from pygigasetelements import connection
+from .element import Element
 
 
 class Base(Element):
@@ -28,5 +28,5 @@ class Base(Element):
         :param mode: 0 -> Home, 1 -> Away, 2-> Custom
         :return: Boolean
         """
-        r = self.post(_URL_BASE + '/' + self._id,
+        r = self.post(connection.URL_BASE + '/' + self._id,
                       json.dumps({'intrusion_settings': {'active_mode': self.__MODES[mode]}}))

@@ -1,4 +1,4 @@
-from ._element import Element
+from pygigasetelements.devicetypes.element import Element
 
 
 class Door(Element):

@@ -14,13 +14,13 @@ from pygigasetelements.devicetypes.door import Door
 _EMAIL = ""  # Your Email-login for https://my.gigaset-elements.com
 _PASSWORD = ""  # Your account password
 
-_URL_IDENTITY = 'https://im.gigaset-elements.de/identity/api/v1/user/login'
-_URL_AUTH = 'https://api.gigaset-elements.de/api/v1/auth/openid/begin?op=gigaset'
-_URL_EVENTS = 'https://api.gigaset-elements.de/api/v2/me/events'
-_URL_BASE = 'https://api.gigaset-elements.de/api/v1/me/basestations'
-_URL_CAMERA = 'https://api.gigaset-elements.de/api/v1/me/cameras'
-_URL_HEALTH = 'https://api.gigaset-elements.de/api/v2/me/health'
-_URL_CHANNEL = 'https://api.gigaset-elements.de/api/v1/me/notifications/users/channels'
+URL_IDENTITY = 'https://im.gigaset-elements.de/identity/api/v1/user/login'
+URL_AUTH = 'https://api.gigaset-elements.de/api/v1/auth/openid/begin?op=gigaset'
+URL_EVENTS = 'https://api.gigaset-elements.de/api/v2/me/events'
+URL_BASE = 'https://api.gigaset-elements.de/api/v1/me/basestations'
+URL_CAMERA = 'https://api.gigaset-elements.de/api/v1/me/cameras'
+URL_HEALTH = 'https://api.gigaset-elements.de/api/v2/me/health'
+URL_CHANNEL = 'https://api.gigaset-elements.de/api/v1/me/notifications/users/channels'
 
 AUTH_EXPIRE = 21540
 
@@ -51,13 +51,13 @@ class ElementsConnection(object, metaclass=Singleton):
         payload = {'email': email,
                    'password': password}
 
-        r = self._post(_URL_IDENTITY, payload)
+        r = self._post(URL_IDENTITY, payload)
         if not r['http'] == requests.codes.ok:
             raise Exception(r.get('message'))
         self._refreshToken()
 
     def _refreshToken(self):
-        self._get(_URL_AUTH)
+        self._get(URL_AUTH)
         self.expiration = time.time() + AUTH_EXPIRE
 
     def get(self, url):
@@ -74,7 +74,7 @@ class ElementsConnection(object, metaclass=Singleton):
 
     def _discover(self):
         devices = list()
-        r = self.get(_URL_BASE)
+        r = self.get(URL_BASE)
 
         for base in r:
             root = Base(id=base.get('id'))
